@@ -1,7 +1,7 @@
 import cors from "cors";
 // 앱을 띄우기위한 모든 기능들을 기술
 import express from "express";
-import { messagesRoute } from "./routes/messages";
+import messagesRoute from "./routes/messages.js";
 
 // express 실행해서 앱을 만듬
 const app = express();
