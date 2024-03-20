@@ -2,6 +2,7 @@ import cors from "cors";
 // 앱을 띄우기위한 모든 기능들을 기술
 import express from "express";
 import messagesRoute from "./routes/messages.js";
+import usersRoute from "./routes/users.js";
 
 // express 실행해서 앱을 만듬
 const app = express();
@@ -16,6 +17,10 @@ app.use(
 );
 
 messagesRoute.forEach(({ method, route, handler }) => {
+  app[method](route, handler);
+});
+
+usersRoute.forEach(({ method, route, handler }) => {
   app[method](route, handler);
 });
 
