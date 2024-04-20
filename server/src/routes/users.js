@@ -17,7 +17,7 @@ const usersRoute = [
     handler: ({ params: { id } }, res) => {
       try {
         const users = getUsers();
-        const user = users.find((u) => u.id === id);
+        const user = Object.values(users).find((u) => u.id === id);
         if (!user) throw Error("사용자가 없습니다.");
         res.send(user);
       } catch (error) {

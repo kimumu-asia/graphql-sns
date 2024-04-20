@@ -16,11 +16,9 @@ app.use(
   })
 );
 
-messagesRoute.forEach(({ method, route, handler }) => {
-  app[method](route, handler);
-});
+const routes = [...messagesRoute, ...usersRoute];
 
-usersRoute.forEach(({ method, route, handler }) => {
+routes.forEach(({ method, route, handler }) => {
   app[method](route, handler);
 });
 
