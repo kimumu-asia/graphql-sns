@@ -34,16 +34,23 @@ const messagesRoute = [
     method: "post",
     route: "/messages",
     handler: ({ body }, res) => {
-      const msgs = getMessages();
-      const newMessage = {
-        id: v4(),
-        text: body.text,
-        userId: body.userId,
-        timestamp: Date.now(),
-      };
-      msgs.unshift(newMessage);
-      setMessages(msgs);
-      res.send(newMessage);
+      try {
+        if (!body.userId) {
+          throw Error("userId is required");
+        }
+        const msgs = getMessages();
+        const newMessage = {
+          id: v4(),
+          text: body.text,
+          userId: body.userId,
+          timestamp: Date.now(),
+        };
+        msgs.unshift(newMessage);
+        setMessages(msgs);
+        res.send(newMessage);
+      } catch (error) {
+        res.status(500).send({ error });
+      }
     },
   },
   // UPDATE MESSAGE
@@ -54,9 +61,11 @@ const messagesRoute = [
       try {
         const msgs = getMessages();
         const targetIndex = msgs.findIndex((msg) => msg.id === id);
+
         if (targetIndex < 0) {
           throw "메시지가 없습니다.";
         }
+
         if (msgs[targetIndex].userId !== body.userId) {
           throw "사용자가 일치하지 않습니다.";
         }
